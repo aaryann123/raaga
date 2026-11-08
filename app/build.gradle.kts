@@ -45,7 +45,7 @@ android {
         val baseVersionName = requireNotNull(versionName)
         buildConfigField("String", "BASE_VERSION_NAME", "\"$baseVersionName\"")
         buildCommit?.let { versionName = "$baseVersionName+$it" }
-        resValue("string", "app_name", appNameOverride ?: "Metrolist")
+        resValue("string", "app_name", appNameOverride ?: "Raaga") // the gradle resValue beats res/values/app_name.xml
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -122,6 +122,8 @@ android {
             isShrinkResources = true
             isCrunchPngs = false
             isDebuggable = false
+            // Muse: personal fork, signed with the persistent debug keystore (no Play upload).
+            signingConfig = signingConfigs.getByName("persistentDebug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",

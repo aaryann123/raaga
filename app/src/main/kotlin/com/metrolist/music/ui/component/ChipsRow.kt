@@ -51,7 +51,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.metrolist.music.R
 import com.metrolist.music.ui.screens.OptionStats
 
@@ -73,14 +75,26 @@ fun <E> ChipsRow(
         Spacer(Modifier.width(12.dp))
 
         chips.forEach { (value, label) ->
+            val selected = currentValue == value
+            // Muse identity: quiet spaced-caps chips instead of YTM's filled pills.
             FilterChip(
-                label = { Text(label) },
-                selected = currentValue == value,
+                label = {
+                    Text(
+                        text = label.uppercase(),
+                        fontSize = 11.sp,
+                        letterSpacing = 1.5.sp,
+                        fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
+                    )
+                },
+                selected = selected,
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = containerColor,
+                    containerColor = Color.Transparent,
+                    labelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.55f),
+                    selectedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                    selectedLabelColor = MaterialTheme.colorScheme.onSurface,
                 ),
                 onClick = { onValueUpdate(value) },
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(50),
                 border = null
             )
 

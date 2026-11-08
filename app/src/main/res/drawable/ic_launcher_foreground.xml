@@ -1,17 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Muse: white skull in ember headphones. The splatter lives in the background layer. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:height="108dp"
-    android:width="108dp"
-    android:viewportWidth="30.0"
-    android:viewportHeight="32.0">
-    <group
-        android:scaleX="0.47"
-        android:scaleY="0.5"
-        android:translateX="7.8"
-        android:translateY="8.0">
-        <path
-            android:fillColor="#00000000"
-            android:pathData="M9.5,15.5L3.707,21.293C3.317,21.684 3.317,22.317 3.707,22.707L9.293,28.293C9.683,28.684 10.317,28.684 10.707,28.293L16.707,22.293C16.895,22.105 17,21.851 17,21.586V4.468C17,3.578 18.074,3.132 18.705,3.759L28,13"
-            android:strokeColor="#FFFFFFFF"
-            android:strokeWidth="5.0" />
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <group android:scaleX="0.62" android:scaleY="0.62" android:pivotX="54" android:pivotY="54">
+        <path android:fillColor="#FFFFFFFF"
+            android:pathData="M54,24 C38,24 27,35 27,50 C27,59 31,66 37,70 L37,78 C37,82 40,85 44,85 L64,85 C68,85 71,82 71,78 L71,70 C77,66 81,59 81,50 C81,35 70,24 54,24 Z" />
+        <path android:strokeColor="#FFE0804D" android:strokeWidth="5" android:strokeLineCap="round"
+            android:pathData="M25,47 C25,29 38,18 54,18 C70,18 83,29 83,47" />
+        <path android:fillColor="#FFE0804D"
+            android:pathData="M24.5,43 h1 a5.5,5.5 0 0 1 5.5,5.5 v10 a5.5,5.5 0 0 1 -5.5,5.5 h-1 a5.5,5.5 0 0 1 -5.5,-5.5 v-10 a5.5,5.5 0 0 1 5.5,-5.5 z" />
+        <path android:fillColor="#FFE0804D"
+            android:pathData="M82.5,43 h1 a5.5,5.5 0 0 1 5.5,5.5 v10 a5.5,5.5 0 0 1 -5.5,5.5 h-1 a5.5,5.5 0 0 1 -5.5,-5.5 v-10 a5.5,5.5 0 0 1 5.5,-5.5 z" />
+        <path android:fillColor="#FF000000" android:pathData="M36.5,55 a7,7.6 0 1 0 14,0 a7,7.6 0 1 0 -14,0 z" />
+        <path android:fillColor="#FF000000" android:pathData="M57.5,55 a7,7.6 0 1 0 14,0 a7,7.6 0 1 0 -14,0 z" />
+        <path android:fillColor="#FF000000" android:pathData="M54,62 L49.5,69.5 L58.5,69.5 Z" />
+        <path android:fillColor="#FF000000" android:pathData="M46.5,76 h2.6 v7 h-2.6 z" />
+        <path android:fillColor="#FF000000" android:pathData="M52.7,76 h2.6 v7 h-2.6 z" />
+        <path android:fillColor="#FF000000" android:pathData="M58.9,76 h2.6 v7 h-2.6 z" />
     </group>
 </vector>

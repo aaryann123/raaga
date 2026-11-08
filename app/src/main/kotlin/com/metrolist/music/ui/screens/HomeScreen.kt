@@ -1189,6 +1189,10 @@ fun HomeScreen(
                 state = lazylistState,
                 contentPadding = LocalPlayerAwareWindowInsets.current.asPaddingValues(),
             ) {
+                item(key = "muse_greeting") {
+                    MuseGreeting()
+                }
+
                 item {
                     ChipsRow(
                         chips = homePage?.chips?.map { it to it.title } ?: emptyList(),
@@ -2609,5 +2613,28 @@ fun HomeScreen(
                 },
             )
         }
+    }
+}
+
+/** Muse identity: the home opens in the launcher's voice — a thin line, then the moment of day in heavy type. */
+@Composable
+private fun MuseGreeting() {
+    val word = remember {
+        when (java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)) {
+            in 5..11 -> "morning"
+            in 12..16 -> "afternoon"
+            in 17..21 -> "evening"
+            else -> "night"
+        }
+    }
+    Column(modifier = Modifier.padding(start = 16.dp, top = 12.dp, bottom = 4.dp)) {
+        Text(
+            text = "Good",
+            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Normal),
+        )
+        Text(
+            text = word,
+            style = MaterialTheme.typography.headlineLarge.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.ExtraBold),
+        )
     }
 }

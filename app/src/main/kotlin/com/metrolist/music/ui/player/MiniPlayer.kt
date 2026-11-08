@@ -183,7 +183,7 @@ private fun NewMiniPlayer(
     // Theme settings - these rarely change
     val miniPlayerBackground by rememberEnumPreference(
         MiniPlayerBackgroundStyleKey,
-        defaultValue = MiniPlayerBackgroundStyle.DEFAULT,
+        defaultValue = MiniPlayerBackgroundStyle.GRADIENT,
     )
     val context = LocalContext.current
     var gradientColors by remember { mutableStateOf<List<Color>>(emptyList()) }
@@ -1013,9 +1013,10 @@ private fun LegacyMiniMediaInfo(
 
              if (mediaMetadata.artists.any { it.name.isNotBlank() }) {
                  Text(
-                     text = mediaMetadata.artists.joinToArtistString(" ${stringResource(R.string.and)} ") { it.name },
+                     text = mediaMetadata.artists.joinToArtistString(" ${stringResource(R.string.and)} ") { it.name }.uppercase(),
                      color = MaterialTheme.colorScheme.secondary,
-                    fontSize = 12.sp,
+                    fontSize = 10.sp,
+                    letterSpacing = 1.5.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )

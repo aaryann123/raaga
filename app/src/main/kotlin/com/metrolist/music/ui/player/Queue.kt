@@ -7,6 +7,7 @@ package com.metrolist.music.ui.player
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
+import coil3.compose.AsyncImage
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -92,10 +93,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
+import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.Timeline
 import androidx.media3.exoplayer.source.ShuffleOrder.DefaultShuffleOrder
@@ -264,7 +268,14 @@ fun Queue(
         },
         collapsedContent = {
             if (useNewPlayerDesign) {
-                // New design
+                // New design. Muse Canvas: the next song rides above the buttons, a tap opens the queue.
+                Column(modifier = Modifier.fillMaxWidth()) {
+                UpNextPeek(
+                    playerConnection = playerConnection,
+                    currentMediaId = mediaMetadata?.id,
+                    color = TextBackgroundColor,
+                    onClick = { state.expandSoft() },
+                )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -414,6 +425,7 @@ fun Queue(
                             tint = iconButtonColor,
                         )
                     }
+                }
                 }
             } else {
                 // Old design
@@ -1345,6 +1357,60 @@ private fun PlayerQueueButton(
                 contentDescription = null,
                 modifier = Modifier.size(iconSize),
                 tint = finalTint,
+            )
+        }
+    }
+}
+
+/**
+ * Muse Canvas: the next song as a slim card above the queue buttons — small art, "UP NEXT" in
+ * spaced caps, title and artist on one line. Hidden when nothing follows. Tap opens the queue.
+ */
+@Composable
+private fun UpNextPeek(
+    playerConnection: com.metrolist.music.playback.PlayerConnection,
+    currentMediaId: String?,
+    color: Color,
+    onClick: () -> Unit,
+) {
+    val shuffleOn by playerConnection.shuffleModeEnabled.collectAsStateWithLifecycle()
+    val next = remember(currentMediaId, shuffleOn) {
+        val player = playerConnection.player
+        val i = player.nextMediaItemIndex
+        if (i != C.INDEX_UNSET && i < player.mediaItemCount) player.getMediaItemAt(i).mediaMetadata else null
+    }
+    if (next == null) return
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(horizontal = 30.dp)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(14.dp))
+            .background(color.copy(alpha = 0.08f))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 7.dp),
+    ) {
+        AsyncImage(
+            model = next.artworkUri,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.size(32.dp).clip(RoundedCornerShape(8.dp)),
+        )
+        Column(Modifier.padding(start = 10.dp).weight(1f)) {
+            Text(
+                text = "UP NEXT",
+                fontSize = 9.sp,
+                letterSpacing = 2.sp,
+                fontWeight = FontWeight.Medium,
+                color = color.copy(alpha = 0.6f),
+            )
+            Text(
+                text = listOfNotNull(next.title, next.artist).joinToString(" — "),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                color = color,
             )
         }
     }

@@ -12,6 +12,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
@@ -197,6 +200,14 @@ fun AppNavigationBar(
                     // Long presses are handled via InteractionSource
                 },
                 interactionSource = interactionSource,
+                // Muse identity: no M3 indicator pill; selection reads from weight and brightness alone.
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent,
+                    selectedIconColor = MaterialTheme.colorScheme.onSurface,
+                    selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unselectedIconColor = contentColor.copy(alpha = 0.5f),
+                    unselectedTextColor = contentColor.copy(alpha = 0.5f),
+                ),
                 icon = {
                     Icon(
                         painter = painterResource(id = iconRes),
@@ -206,7 +217,10 @@ fun AppNavigationBar(
                 label = if (!slimNav) {
                     {
                         Text(
-                            text = stringResource(screen.titleId),
+                            text = stringResource(screen.titleId).uppercase(),
+                            fontSize = 10.sp,
+                            letterSpacing = 1.5.sp,
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
